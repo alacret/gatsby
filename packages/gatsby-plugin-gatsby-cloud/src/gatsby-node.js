@@ -79,13 +79,13 @@ exports.onPostBuild = async (
     })
   }
 
-  let ssrRoutes = []
+  const ssrRoutes = []
 
   for (const [pathname, page] of pages) {
     if (page.ssr) {
       ssrRoutes.push({
         fromPath: pathname,
-        toPath: `_ssr/${pathname}`,
+        toPath: `_ssr${pathname}`,
       })
     }
   }
