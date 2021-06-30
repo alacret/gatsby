@@ -11,7 +11,7 @@ import {
   isWorker,
   getMessenger,
   GatsbyWorkerMessenger,
-} from "./worker/messaging"
+} from "../worker/messaging"
 import {
   JobInput,
   InternalJob,
@@ -20,10 +20,7 @@ import {
   IJobCompletedMessage,
   IJobFailed,
   IJobNotWhitelisted,
-} from "./jobs-types"
-import type { GatsbyWorkerPool } from "./worker/pool"
-import { store } from "../redux"
-import { internalActions } from "../redux/actions"
+} from "./types"
 
 type IncomingMessages = IJobCompletedMessage | IJobFailed | IJobNotWhitelisted
 
@@ -421,37 +418,4 @@ export async function sendJobToMainProcess(
   deferredWorkerPromises.set(job.id, deferredWorkerPromise)
 
   return deferredWorkerPromise.promise
-}
-
-export function initJobsMessaging(workerPool: GatsbyWorkerPool): void {
-  workerPool.onMessage((msg, workerId) => {
-    if (msg.type === MESSAGE_TYPES.JOB_CREATED) {
-      store
-        .dispatch(internalActions.createJobV2FromInternalJob(msg.payload))
-        .then(result => {
-          workerPool.sendMessage(
-            {
-              type: MESSAGE_TYPES.JOB_COMPLETED,
-              payload: {
-                id: msg.payload.id,
-                result,
-              },
-            },
-            workerId
-          )
-        })
-        .catch(error => {
-          workerPool.sendMessage(
-            {
-              type: MESSAGE_TYPES.JOB_FAILED,
-              payload: {
-                id: msg.payload.id,
-                error: error.message,
-              },
-            },
-            workerId
-          )
-        })
-    }
-  })
 }

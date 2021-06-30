@@ -35,7 +35,7 @@ import {
   removeInProgressJob,
   getInProcessJobPromise,
   sendJobToMainProcess,
-} from "../../utils/jobs-manager"
+} from "../../utils/jobs/manager"
 import { isWorker, getMessenger } from "../../utils/worker/messaging"
 
 /**

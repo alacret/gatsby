@@ -2,7 +2,7 @@ import "jest-extended"
 import { createTestWorker, GatsbyTestWorkerPool } from "./test-helpers"
 import { store } from "../../../redux"
 import * as path from "path"
-import { waitUntilAllJobsComplete } from "../../jobs-manager"
+import { waitUntilAllJobsComplete } from "../../jobs/manager"
 import { getReduxJobs, getJobsMeta } from "./test-helpers/child-for-tests"
 
 let worker: GatsbyTestWorkerPool | undefined

@@ -1,5 +1,5 @@
 import { WorkerPool } from "gatsby-worker"
-import { initJobsMessaging } from "../../../jobs-manager"
+import { initJobsMessaging } from "../../../jobs/worker-messaging"
 import type { MessagesFromChild, MessagesFromParent } from "../../messaging"
 
 export type GatsbyTestWorkerPool = WorkerPool<

@@ -37,7 +37,7 @@ const isTestEnv = process.env.NODE_ENV === `test`
 const shadowCreatePagePath = _.memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
-const { createInternalJob } = require(`../../utils/jobs-manager`)
+const { createInternalJob } = require(`../../utils/jobs/manager`)
 
 const actions = {}
 const isWindows = platform() === `win32`

@@ -20,7 +20,6 @@ import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
 import { detectLmdbStore } from "../datastore"
 import { loadConfigAndPlugins } from "../bootstrap/load-config-and-plugins"
-
 interface IPluginResolution {
   resolve: string
   options: IPluginInfoOptions

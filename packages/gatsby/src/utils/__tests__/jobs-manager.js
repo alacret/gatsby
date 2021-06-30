@@ -92,7 +92,7 @@ describe(`Jobs manager`, () => {
     })
 
     jest.isolateModules(() => {
-      jobManager = require(`../jobs-manager`)
+      jobManager = require(`../jobs/manager`)
     })
   })
 
