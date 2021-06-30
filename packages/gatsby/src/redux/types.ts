@@ -31,6 +31,7 @@ export interface IGatsbyPage {
   matchPath: undefined | string
   component: SystemPath
   componentChunkName: string
+  ssr: boolean
   isCreatedByStatefulCreatePages: boolean
   context: Record<string, unknown>
   updatedAt: number
