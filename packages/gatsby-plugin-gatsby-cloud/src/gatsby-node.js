@@ -4,6 +4,7 @@ import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
 import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
+import createSSRRoutes from "./create-ssr-routes"
 import { readJSON } from "fs-extra"
 import { joinPath } from "gatsby-core-utils"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
@@ -36,7 +37,7 @@ exports.onPostBuild = async (
   const pluginData = makePluginData(store, assetsManifest, pathPrefix)
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
-  const { redirects, pageDataStats, nodes } = store.getState()
+  const { redirects, pageDataStats, nodes, pages } = store.getState()
 
   let nodesCount
 
@@ -78,10 +79,22 @@ exports.onPostBuild = async (
     })
   }
 
+  let ssrRoutes = []
+
+  for (const [pathname, page] of pages) {
+    if (page.ssr) {
+      ssrRoutes.push({
+        fromPath: pathname,
+        toPath: `_ssr/${pathname}`,
+      })
+    }
+  }
+
   await Promise.all([
     buildHeadersProgram(pluginData, pluginOptions, reporter),
     createRedirects(pluginData, redirects, rewrites),
     copyFunctionsManifest(pluginData),
+    createSSRRoutes(pluginData, ssrRoutes),
   ])
 }
 
